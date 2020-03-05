@@ -10,6 +10,7 @@ El material de esta documentación está sacado de las presentaciones de [Ciaran
 - [TDD with PhpSpec](https://es.slideshare.net/CiaranMcNulty/tdd-with-phpspec)
 - [Driving Design through Examples](https://es.slideshare.net/CiaranMcNulty/driving-design-through-examples-phpcon-pl-2015)
 
+Versión en PHP: [https://github.com/aulasoftwarelibre/bdd-by-example-docs/](https://github.com/aulasoftwarelibre/bdd-by-example-docs/)
 
 ## Agradecimientos
 

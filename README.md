@@ -1,4 +1,4 @@
-# BDD by example
+# BDD by example with TypeScript
 
 <div align="center">
     <img width="200" src="/docs/images/logoasl.png" alt="Aula Software Libre de la UCO">
@@ -15,5 +15,7 @@ Universidad de Córdoba](https://www.uco.es/aulasoftwarelibre).
 
 El material de esta documentación está sacado de las presentaciones de [Ciaran McNulty](https://es.slideshare.net/CiaranMcNulty).
 
-* [TDD with PhpSpec](https://es.slideshare.net/CiaranMcNulty/tdd-with-phpspec)
-* [Driving Design through Examples](https://es.slideshare.net/CiaranMcNulty/driving-design-through-examples-phpcon-pl-2015)
+- [TDD with PhpSpec](https://es.slideshare.net/CiaranMcNulty/tdd-with-phpspec)
+- [Driving Design through Examples](https://es.slideshare.net/CiaranMcNulty/driving-design-through-examples-phpcon-pl-2015)
+
+Versión en PHP: [https://github.com/aulasoftwarelibre/bdd-by-example-docs/](https://github.com/aulasoftwarelibre/bdd-by-example-docs/)
