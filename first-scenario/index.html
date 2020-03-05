@@ -1,0 +1,1567 @@
+
+
+
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="Curso básico de BDD con TypeScript">
+      
+      
+      
+        <meta name="author" content="Sergio Gómez <sergio@uco.es>">
+      
+      
+        <meta name="lang:clipboard.copy" content="Copiar al portapapeles">
+      
+        <meta name="lang:clipboard.copied" content="Copiado al portapapeles">
+      
+        <meta name="lang:search.language" content="es">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No se encontraron documentos">
+      
+        <meta name="lang:search.result.one" content="1 documento encontrado">
+      
+        <meta name="lang:search.result.other" content="# documentos encontrados">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../images/logoasl.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-4.6.3">
+    
+    
+      
+        <title>Implementando el primer escenario - BDD by example with TypeScript</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.adb8469c.css">
+      
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../extra.css">
+    
+    
+      
+        
+<script>
+  window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "UA-51754922-2", "auto")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })
+</script>
+<script async src="https://www.google-analytics.com/analytics.js"></script>
+      
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#implementando-el-primer-escenario" tabindex="0" class="md-skip">
+        Saltar a contenido
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href=".." title="BDD by example with TypeScript" aria-label="BDD by example with TypeScript" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              BDD by example with TypeScript
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Implementando el primer escenario
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Búsqueda" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Teclee para comenzar búsqueda
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/aulasoftwarelibre/bdd-by-example-with-typescript-docs/" title="Ir al repositorio" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    aulasoftwarelibre/bdd-by-example-with-typescript-docs
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href=".." title="BDD by example with TypeScript" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    BDD by example with TypeScript
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/aulasoftwarelibre/bdd-by-example-with-typescript-docs/" title="Ir al repositorio" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    aulasoftwarelibre/bdd-by-example-with-typescript-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Inicio" class="md-nav__link">
+      Inicio
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../introduction/" title="Introducción" class="md-nav__link">
+      Introducción
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../modelling/" title="Modelando con ejemplos" class="md-nav__link">
+      Modelando con ejemplos
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../start-project/" title="Crear el proyecto" class="md-nav__link">
+      Crear el proyecto
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Implementando el primer escenario
+      </label>
+    
+    <a href="./" title="Implementando el primer escenario" class="md-nav__link md-nav__link--active">
+      Implementando el primer escenario
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Tabla de contenidos</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#describir-la-clase-bill" class="md-nav__link">
+    Describir la clase Bill
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anadiendo-elementos-a-la-cuenta" class="md-nav__link">
+    Añadiendo elementos a la cuenta
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#refactorizar-menu" class="md-nav__link">
+    Refactorizar Menu
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementando-los-primeros-steps" class="md-nav__link">
+    Implementando los primeros steps
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../second-scenario/" title="Segundo escenario" class="md-nav__link">
+      Segundo escenario
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../third-scenario/" title="Tercer escenario" class="md-nav__link">
+      Tercer escenario
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../fourth-scenario/" title="Cuarto escenario" class="md-nav__link">
+      Cuarto escenario
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../fifth-scenario/" title="Quinto escenario" class="md-nav__link">
+      Quinto escenario
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Tabla de contenidos</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#describir-la-clase-bill" class="md-nav__link">
+    Describir la clase Bill
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#anadiendo-elementos-a-la-cuenta" class="md-nav__link">
+    Añadiendo elementos a la cuenta
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#refactorizar-menu" class="md-nav__link">
+    Refactorizar Menu
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementando-los-primeros-steps" class="md-nav__link">
+    Implementando los primeros steps
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/aulasoftwarelibre/bdd-by-example-with-typescript-docs/edit/master/docs/first-scenario.md" title="Editar esta página" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="implementando-el-primer-escenario">Implementando el primer escenario<a class="headerlink" href="#implementando-el-primer-escenario" title="Permanent link">&para;</a></h1>
+<p>El primer escenario es el siguiente:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">Escenario:</span><span class="nf"> Ganar puntos al pagar en efectivo</span>
+<span class="k">    Dado </span><span class="nf">que he comprado </span><span class="s">5</span><span class="nf"> menús del número </span><span class="s">1</span><span class="nf"></span>
+<span class="nf">    </span><span class="k">Cuando </span><span class="nf">pido la cuenta recibo una factura de </span><span class="s">55</span><span class="nf"> euros</span>
+<span class="nf">    </span><span class="k">Y </span><span class="nf">pago en efectivo con </span><span class="s">55</span><span class="nf"> euros</span>
+<span class="nf">    </span><span class="k">Entonces </span><span class="nf">la factura está pagada</span>
+<span class="nf">    </span><span class="k">Y </span><span class="nf">he obtenido </span><span class="s">50</span><span class="nf"> puntos</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Para implementar esta escenario, que es realmente el primero de nuestro proyecto que vamos a implementar, necesitamos una clase cuenta (<em>Bill</em>) que guarde los menús que se han consumido e informe del coste total, de la cantidad que se ha ingresado (en dinero o puntos), de lo que resta por pagar y de los puntos obtenidos.</p>
+<h2 id="describir-la-clase-bill">Describir la clase <em>Bill</em><a class="headerlink" href="#describir-la-clase-bill" title="Permanent link">&para;</a></h2>
+<p>Vamos a definir nuestra clase <code>src/restaurant/bill.ts</code>:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kr">class</span> <span class="nx">Bill</span> <span class="p">{}</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">Bill</span><span class="p">;</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>y la especificación <code>ssrc/restaurant/bill.spec.ts</code>:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kr">import</span> <span class="nx">Bill</span> <span class="nx">from</span> <span class="s2">&quot;./bill&quot;</span><span class="p">;</span>
+
+<span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;Bill&quot;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">bill</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Bill</span><span class="p">();</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;is initializable&quot;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">bill</span><span class="p">).</span><span class="nx">toBeInstanceOf</span><span class="p">(</span><span class="nx">Bill</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Ahora tenemos que describir la API de nuestra clase. Concretamente para este escenario nuestra clase debe proporcionar una API para:</p>
+<ul>
+<li>Añadir un menú a la cuenta</li>
+<li>Obtener el total de la cuenta</li>
+<li>Permitir pagar una cantidad de dinero</li>
+<li>Determinar cuánto resta por pagar</li>
+<li>Determinar cuántos puntos se han ganado</li>
+</ul>
+<p>Para esta prueba vamos a suponer que tenemos ya una instancia de <em>Menu</em> que cuesta 10€.</p>
+<h2 id="anadiendo-elementos-a-la-cuenta">Añadiendo elementos a la cuenta<a class="headerlink" href="#anadiendo-elementos-a-la-cuenta" title="Permanent link">&para;</a></h2>
+<p>Nuestro objetivo es añadir el precio de los menús a la cuenta. Para eso vamos a suponer que tenemos un menú que vale 10€.</p>
+<p>Vamos a crear ese menú de ejemplo en nuestra especificación:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kr">import</span> <span class="p">{</span> <span class="nx">mocked</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&quot;ts-jest/utils&quot;</span><span class="p">;</span>
+
+<span class="kr">import</span> <span class="nx">Bill</span> <span class="nx">from</span> <span class="s2">&quot;./bill&quot;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">Menu</span> <span class="nx">from</span> <span class="s2">&quot;./menu&quot;</span><span class="p">;</span>
+
+<span class="nx">jest</span><span class="p">.</span><span class="nx">mock</span><span class="p">(</span><span class="s2">&quot;./menu&quot;</span><span class="p">);</span>
+
+<span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;Bill&quot;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">bill</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Bill</span><span class="p">();</span>
+  <span class="kd">let</span> <span class="nx">menu</span> <span class="o">=</span> <span class="nx">mocked</span><span class="p">(</span><span class="nx">Menu</span><span class="p">);</span>
+
+  <span class="nx">beforeEach</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">menu</span><span class="p">.</span><span class="nx">mockClear</span><span class="p">();</span>
+    <span class="nx">menu</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">price</span> <span class="o">=</span> <span class="nx">jest</span><span class="p">.</span><span class="nx">fn</span><span class="p">().</span><span class="nx">mockReturnValue</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>En esta ocasión no estamos usando <em>beforeEach</em> para configurar el constructor de la clase, que por ahora no hemos determinado que vayamos a necesitar, sino para configurar una instancia de la clase <em>Menu</em> y que cuando se llamen a la función <em>price()</em> devolverá 1000. Hay que tener en cuenta que <em>Menu</em> no es algo que hayamos instanciado nosotros. Lo que ha ocurrido es que <em>jest</em> ha creado un <em>doble</em> o <em>mock</em>, una clase que simula las respuestas a los métodos con los valores que se le indican con las cláusulas <em>mockReturnValue</em>.</p>
+<p>Completamos la especificación:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kr">import</span> <span class="p">{</span> <span class="nx">mocked</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&quot;ts-jest/utils&quot;</span><span class="p">;</span>
+
+<span class="kr">import</span> <span class="nx">Bill</span> <span class="nx">from</span> <span class="s2">&quot;./bill&quot;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">Menu</span> <span class="nx">from</span> <span class="s2">&quot;./menu&quot;</span><span class="p">;</span>
+
+<span class="nx">jest</span><span class="p">.</span><span class="nx">mock</span><span class="p">(</span><span class="s2">&quot;./menu&quot;</span><span class="p">);</span>
+
+<span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;Bill&quot;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">bill</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Bill</span><span class="p">();</span>
+  <span class="kd">let</span> <span class="nx">menu</span> <span class="o">=</span> <span class="nx">mocked</span><span class="p">(</span><span class="nx">Menu</span><span class="p">);</span>
+
+  <span class="nx">beforeEach</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">menu</span><span class="p">.</span><span class="nx">mockClear</span><span class="p">();</span>
+    <span class="nx">menu</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">price</span> <span class="o">=</span> <span class="nx">jest</span><span class="p">.</span><span class="nx">fn</span><span class="p">().</span><span class="nx">mockReturnValue</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;has no items by default&quot;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">bill</span><span class="p">.</span><span class="nx">total</span><span class="p">()).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;add an item&quot;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">bill</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">menu</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">bill</span><span class="p">.</span><span class="nx">total</span><span class="p">()).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">1100</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Estamos describiendo que nuestra cuenta, cuando se crea, no debe tener ningún elemento, y que los elementos que se añaden incrementan la cuenta (con IVA). Ejecutamos las pruebas, que fallarán, y pasamos a implementar el código. Pasamos a completar el código de nuestra clase <em>Bill</em>:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kr">import</span> <span class="nx">Menu</span> <span class="nx">from</span> <span class="s2">&quot;./menu&quot;</span><span class="p">;</span>
+
+<span class="kr">class</span> <span class="nx">Bill</span> <span class="p">{</span>
+  <span class="kr">private</span> <span class="nx">readonly</span> <span class="nx">VAT</span> <span class="o">=</span> <span class="mf">1.1</span><span class="p">;</span>
+  <span class="kr">private</span> <span class="nx">items</span>: <span class="kt">Menu</span><span class="p">[];</span>
+
+  <span class="kr">constructor</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">items</span> <span class="o">=</span> <span class="p">[];</span>
+  <span class="p">}</span>
+
+  <span class="nx">add</span><span class="p">(</span><span class="nx">menu</span>: <span class="kt">Menu</span><span class="p">)</span><span class="o">:</span> <span class="k">void</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">menu</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">total</span><span class="p">()</span><span class="o">:</span> <span class="kt">number</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">VAT</span> <span class="o">*</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">reduce</span><span class="p">((</span><span class="nx">carry</span>: <span class="kt">number</span><span class="p">,</span> <span class="nx">item</span>: <span class="kt">Menu</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">carry</span> <span class="o">+</span> <span class="nx">item</span><span class="p">.</span><span class="nx">price</span><span class="p">(),</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">Bill</span><span class="p">;</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Y ejecutamos las pruebas:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="gp">$</span> yarn <span class="nb">test</span>
+<span class="go">yarn run v1.22.0</span>
+<span class="gp">$</span> jest
+<span class="go"> PASS  src/restaurant/menu.spec.ts</span>
+<span class="go"> PASS  src/restaurant/bill.spec.ts</span>
+
+<span class="go">Test Suites: 2 passed, 2 total</span>
+<span class="go">Tests:       4 passed, 4 total</span>
+<span class="go">Snapshots:   0 total</span>
+<span class="go">Time:        1.701s, estimated 3s</span>
+<span class="go">Ran all test suites.</span>
+<span class="go">Done in 3.00s.</span>
+</code></pre></div>
+</td></tr></table>
+
+<h2 id="refactorizar-menu">Refactorizar <em>Menu</em><a class="headerlink" href="#refactorizar-menu" title="Permanent link">&para;</a></h2>
+<p>A la clase Bill, ¿le importa el número del menú? No, en realidad no. En más, ¿podríamos añadir elementos a la cuenta que no fueran menús? Lo lógico es que sí. Entonces, ¿cómo hacemos nuestra clase compatible con cualquier clase que tenga un precio? Pues utilizando interfaces. Vamos a crear una interfaz <em>Priced</em> que obligue a las clases que lo implementen a devolver <em>price()</em>. De esa manera, a <em>Bill</em> solo le interesa que elemento que añadimos a la cuenta tenga un método <em>price</em>.</p>
+<p>Vamos a crear nuestro interfaz <code>Priced</code> en <code>src/restaurant/priced.ts</code>:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kr">interface</span> <span class="nx">Priced</span> <span class="p">{</span>
+  <span class="nx">price</span><span class="p">()</span><span class="o">:</span> <span class="kt">number</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">Priced</span><span class="p">;</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Ahora necesitamos que nuestra clase <em>Menu</em> implemente la interfaz <em>Priced</em>:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kr">import</span> <span class="nx">Priced</span> <span class="nx">from</span> <span class="s2">&quot;./priced&quot;</span><span class="p">;</span>
+
+<span class="hll"><span class="kr">class</span> <span class="nx">Menu</span> <span class="kr">implements</span> <span class="nx">Priced</span> <span class="p">{</span>
+</span>  <span class="kr">constructor</span><span class="p">(</span><span class="kr">private</span> <span class="nx">_option</span>: <span class="kt">number</span><span class="p">,</span> <span class="kr">private</span> <span class="nx">_price</span>: <span class="kt">number</span><span class="p">)</span> <span class="p">{}</span>
+
+  <span class="nx">option</span><span class="p">()</span><span class="o">:</span> <span class="kt">number</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">_option</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nx">price</span><span class="p">()</span><span class="o">:</span> <span class="kt">number</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">_price</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">Menu</span><span class="p">;</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Refactorizamos la especificación de Bill:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kr">import</span> <span class="p">{</span> <span class="nx">mock</span><span class="p">,</span> <span class="nx">mockReset</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&quot;jest-mock-extended&quot;</span><span class="p">;</span>
+
+<span class="kr">import</span> <span class="nx">Bill</span> <span class="nx">from</span> <span class="s2">&quot;./bill&quot;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">Priced</span> <span class="nx">from</span> <span class="s2">&quot;./priced&quot;</span><span class="p">;</span>
+
+<span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;Bill&quot;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">bill</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Bill</span><span class="p">();</span>
+  <span class="kd">let</span> <span class="nx">menu</span> <span class="o">=</span> <span class="nx">mock</span><span class="o">&lt;</span><span class="nx">Priced</span><span class="o">&gt;</span><span class="p">();</span>
+
+  <span class="nx">beforeEach</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">mockReset</span><span class="p">(</span><span class="nx">menu</span><span class="p">);</span>
+    <span class="nx">menu</span><span class="p">.</span><span class="nx">price</span><span class="p">.</span><span class="nx">mockReturnValue</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;has no items by default&quot;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">bill</span><span class="p">.</span><span class="nx">total</span><span class="p">()).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;add an item&quot;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">bill</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">menu</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">bill</span><span class="p">.</span><span class="nx">total</span><span class="p">()).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">1100</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Y refactorizamos la clase <em>Bill</em>:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kr">import</span> <span class="nx">Priced</span> <span class="nx">from</span> <span class="s2">&quot;./priced&quot;</span><span class="p">;</span>
+
+<span class="kr">class</span> <span class="nx">Bill</span> <span class="p">{</span>
+  <span class="kr">private</span> <span class="nx">readonly</span> <span class="nx">VAT</span> <span class="o">=</span> <span class="mf">1.1</span><span class="p">;</span>
+  <span class="kr">private</span> <span class="nx">items</span>: <span class="kt">Priced</span><span class="p">[];</span>
+
+  <span class="kr">constructor</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">items</span> <span class="o">=</span> <span class="p">[];</span>
+  <span class="p">}</span>
+
+  <span class="nx">add</span><span class="p">(</span><span class="nx">item</span>: <span class="kt">Priced</span><span class="p">)</span><span class="o">:</span> <span class="k">void</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">item</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">total</span><span class="p">()</span><span class="o">:</span> <span class="kt">number</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">VAT</span> <span class="o">*</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">reduce</span><span class="p">(</span>
+        <span class="p">(</span><span class="nx">carry</span>: <span class="kt">number</span><span class="p">,</span> <span class="nx">item</span>: <span class="kt">Priced</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">carry</span> <span class="o">+</span> <span class="nx">item</span><span class="p">.</span><span class="nx">price</span><span class="p">(),</span>
+        <span class="mi">0</span>
+      <span class="p">)</span>
+    <span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">Bill</span><span class="p">;</span>
+</code></pre></div>
+</td></tr></table>
+
+<h2 id="implementando-los-primeros-steps">Implementando los primeros steps<a class="headerlink" href="#implementando-los-primeros-steps" title="Permanent link">&para;</a></h2>
+<p>Ahora estamos en posición de implementar los primeros steps:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">Escenario:</span><span class="nf"> Ganar puntos al pagar en efectivo</span>
+<span class="hll"><span class="k">    Dado </span><span class="nf">que he comprado </span><span class="s">5</span><span class="nf"> menús del número </span><span class="s">1</span><span class="nf"></span>
+</span><span class="hll"><span class="nf">    </span><span class="k">Cuando </span><span class="nf">pido la cuenta recibo una factura de </span><span class="s">55</span><span class="nf"> euros</span>
+</span><span class="nf">    </span><span class="k">Y </span><span class="nf">pago en efectivo con </span><span class="s">55</span><span class="nf"> euros</span>
+<span class="nf">    </span><span class="k">Entonces </span><span class="nf">la factura está pagada</span>
+<span class="nf">    </span><span class="k">Y </span><span class="nf">he obtenido </span><span class="s">50</span><span class="nf"> puntos</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Quedando el código en el archivo <code>step-definitions/menu.steps.ts</code> como sigue:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kr">import</span> <span class="p">{</span> <span class="nx">expect</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&quot;chai&quot;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">Before</span><span class="p">,</span> <span class="nx">Given</span><span class="p">,</span> <span class="nx">TableDefinition</span><span class="p">,</span> <span class="nx">Then</span><span class="p">,</span> <span class="nx">When</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&quot;cucumber&quot;</span><span class="p">;</span>
+
+<span class="kr">import</span> <span class="nx">Bill</span> <span class="nx">from</span> <span class="s2">&quot;../src/restaurant/bill&quot;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">Menu</span> <span class="nx">from</span> <span class="s2">&quot;../src/restaurant/menu&quot;</span><span class="p">;</span>
+
+<span class="kd">let</span> <span class="nx">menus</span>: <span class="kt">Menu</span><span class="p">[];</span>
+<span class="hll"><span class="kd">let</span> <span class="nx">bill</span>: <span class="kt">Bill</span><span class="p">;</span>
+</span>
+<span class="nx">Before</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">menus</span> <span class="o">=</span> <span class="p">[];</span>
+<span class="hll">  <span class="nx">bill</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Bill</span><span class="p">();</span>
+</span><span class="p">});</span>
+
+<span class="nx">Given</span><span class="p">(</span><span class="s2">&quot;los siguientes menús:&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">dataTable</span>: <span class="kt">TableDefinition</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">dataTable</span>
+    <span class="p">.</span><span class="nx">rows</span><span class="p">()</span>
+    <span class="p">.</span><span class="nx">forEach</span><span class="p">(</span>
+      <span class="nx">values</span> <span class="o">=&gt;</span>
+        <span class="p">(</span><span class="nx">menus</span><span class="p">[</span><span class="nx">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Menu</span><span class="p">(</span>
+          <span class="nb">Number</span><span class="p">(</span><span class="nx">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+          <span class="mi">100</span> <span class="o">*</span> <span class="nb">Number</span><span class="p">(</span><span class="nx">values</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="p">))</span>
+    <span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nx">Given</span><span class="p">(</span><span class="s2">&quot;que he comprado {int} menús del número {int}&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span>
+  <span class="nx">units</span>: <span class="kt">number</span><span class="p">,</span>
+  <span class="nx">option</span>: <span class="kt">number</span>
+<span class="p">)</span> <span class="p">{</span>
+<span class="hll">  <span class="kr">const</span> <span class="nx">menu</span> <span class="o">=</span> <span class="nx">menus</span><span class="p">[</span><span class="nx">option</span><span class="p">];</span>
+</span><span class="hll">  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">units</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+</span><span class="hll">    <span class="nx">bill</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">menu</span><span class="p">);</span>
+</span><span class="hll">  <span class="p">}</span>
+</span><span class="p">});</span>
+
+<span class="nx">When</span><span class="p">(</span><span class="s2">&quot;pido la cuenta recibo una factura de {int} euros&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span>
+  <span class="nx">total</span>: <span class="kt">number</span>
+<span class="p">)</span> <span class="p">{</span>
+<span class="hll">  <span class="nx">expect</span><span class="p">(</span><span class="nx">bill</span><span class="p">.</span><span class="nx">total</span><span class="p">()).</span><span class="nx">to</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">total</span> <span class="o">*</span> <span class="mi">100</span><span class="p">);</span>
+</span><span class="p">});</span>
+
+<span class="nx">When</span><span class="p">(</span><span class="s2">&quot;pago en efectivo con {int} euros&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="kr">int</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// When(&#39;pago en efectivo con {float} euros&#39;, function (float) {</span>
+  <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
+  <span class="k">return</span> <span class="s2">&quot;pending&quot;</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="nx">Then</span><span class="p">(</span><span class="s2">&quot;la factura está pagada&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
+  <span class="k">return</span> <span class="s2">&quot;pending&quot;</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="nx">Then</span><span class="p">(</span><span class="s2">&quot;he obtenido {int} puntos&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="kr">int</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Then(&#39;he obtenido {float} puntos&#39;, function (float) {</span>
+  <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
+  <span class="k">return</span> <span class="s2">&quot;pending&quot;</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="nx">When</span><span class="p">(</span><span class="s2">&quot;pago con {int} puntos y {int} euros&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="kr">int</span><span class="p">,</span> <span class="nx">int2</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// When(&#39;pago con {int} puntos y {float} euros&#39;, function (int, float) {</span>
+  <span class="c1">// When(&#39;pago con {float} puntos y {int} euros&#39;, function (float, int) {</span>
+  <span class="c1">// When(&#39;pago con {float} puntos y {float} euros&#39;, function (float, float2) {</span>
+  <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
+  <span class="k">return</span> <span class="s2">&quot;pending&quot;</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="nx">Then</span><span class="p">(</span><span class="s2">&quot;quedan {int} euros por pagar&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="kr">int</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Then(&#39;quedan {float} euros por pagar&#39;, function (float) {</span>
+  <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
+  <span class="k">return</span> <span class="s2">&quot;pending&quot;</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="nx">Given</span><span class="p">(</span><span class="s2">&quot;que he comprado {int} menú del número {int}&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="kr">int</span><span class="p">,</span> <span class="nx">int2</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Given(&#39;que he comprado {int} menú del número {float}&#39;, function (int, float) {</span>
+  <span class="c1">// Given(&#39;que he comprado {float} menú del número {int}&#39;, function (float, int) {</span>
+  <span class="c1">// Given(&#39;que he comprado {float} menú del número {float}&#39;, function (float, float2) {</span>
+  <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
+  <span class="k">return</span> <span class="s2">&quot;pending&quot;</span><span class="p">;</span>
+<span class="p">});</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Y comprobamos que, efectivamente, el código funciona:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ yarn cucumber features/menu.feature:16
+....P--....P--
+
+Warnings:
+
+<span class="m">1</span><span class="o">)</span> Scenario: Ganar puntos al pagar en efectivo <span class="c1"># features/menu.feature:16</span>
+   ✔ Before <span class="c1"># step-definitions/menu.steps.ts:10</span>
+   ✔ Dados los siguientes menús: <span class="c1"># step-definitions/menu.steps.ts:15</span>
+       <span class="p">|</span> número <span class="p">|</span> precio <span class="p">|</span>
+       <span class="p">|</span> <span class="m">1</span>      <span class="p">|</span> <span class="m">10</span>     <span class="p">|</span>
+       <span class="p">|</span> <span class="m">2</span>      <span class="p">|</span> <span class="m">12</span>     <span class="p">|</span>
+       <span class="p">|</span> <span class="m">3</span>      <span class="p">|</span> <span class="m">8</span>      <span class="p">|</span>
+   ✔ Dado que he comprado <span class="m">5</span> menús del número <span class="m">1</span> <span class="c1"># step-definitions/menu.steps.ts:27</span>
+   ✔ Cuando pido la cuenta recibo una factura de <span class="m">55</span> euros <span class="c1"># step-definitions/menu.steps.ts:37</span>
+   ? Y pago en efectivo con <span class="m">55</span> euros <span class="c1"># step-definitions/menu.steps.ts:43</span>
+       Pending
+   - Entonces la factura está pagada <span class="c1"># step-definitions/menu.steps.ts:49</span>
+   - Y he obtenido <span class="m">50</span> puntos <span class="c1"># step-definitions/menu.steps.ts:54</span>
+
+<span class="m">1</span> scenario <span class="o">(</span><span class="m">1</span> pending<span class="o">)</span>
+<span class="m">6</span> steps <span class="o">(</span><span class="m">1</span> pending, <span class="m">2</span> skipped, <span class="m">3</span> passed<span class="o">)</span>
+0m00.003s
+</code></pre></div>
+</td></tr></table>
+
+<h1 id="implementando-el-pago">Implementando el pago<a class="headerlink" href="#implementando-el-pago" title="Permanent link">&para;</a></h1>
+<p>Para implementar el pago debemos ser capaces de indicar una cantidad pagada en metálico, ver cuánto queda por pagar y ver cuántos puntos hemos obtenido.</p>
+<p>Esta sería la especificación:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kr">import</span> <span class="p">{</span> <span class="nx">mock</span><span class="p">,</span> <span class="nx">mockReset</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&quot;jest-mock-extended&quot;</span><span class="p">;</span>
+
+<span class="kr">import</span> <span class="nx">Bill</span> <span class="nx">from</span> <span class="s2">&quot;./bill&quot;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">Priced</span> <span class="nx">from</span> <span class="s2">&quot;./priced&quot;</span><span class="p">;</span>
+
+<span class="nx">describe</span><span class="p">(</span><span class="s2">&quot;Bill&quot;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">bill</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Bill</span><span class="p">();</span>
+  <span class="kd">let</span> <span class="nx">menu</span> <span class="o">=</span> <span class="nx">mock</span><span class="o">&lt;</span><span class="nx">Priced</span><span class="o">&gt;</span><span class="p">();</span>
+
+  <span class="nx">beforeEach</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">bill</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Bill</span><span class="p">();</span>
+    <span class="nx">mockReset</span><span class="p">(</span><span class="nx">menu</span><span class="p">);</span>
+    <span class="nx">menu</span><span class="p">.</span><span class="nx">price</span><span class="p">.</span><span class="nx">mockReturnValue</span><span class="p">(</span><span class="mi">1000</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;has no items by default&quot;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">bill</span><span class="p">.</span><span class="nx">total</span><span class="p">()).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;add an item&quot;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">bill</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">menu</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">bill</span><span class="p">.</span><span class="nx">total</span><span class="p">()).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">1100</span><span class="p">);</span>
+  <span class="p">});</span>
+
+<span class="hll">  <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;can be paid with money&quot;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span>    <span class="nx">bill</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">menu</span><span class="p">);</span>
+    <span class="nx">bill</span><span class="p">.</span><span class="nx">payWithMoney</span><span class="p">(</span><span class="mi">1100</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">bill</span><span class="p">.</span><span class="nx">restToPay</span><span class="p">()).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="p">});</span>
+
+<span class="hll">  <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;can give points when is payed with money&quot;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span>    <span class="nx">bill</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">menu</span><span class="p">);</span>
+    <span class="nx">bill</span><span class="p">.</span><span class="nx">payWithMoney</span><span class="p">(</span><span class="mi">1100</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">bill</span><span class="p">.</span><span class="nx">points</span><span class="p">()).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+  <span class="p">});</span>
+
+<span class="hll">  <span class="nx">it</span><span class="p">(</span><span class="s2">&quot;cannot give points when total is not enough&quot;</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+</span>    <span class="kr">const</span> <span class="nx">otherMenu</span> <span class="o">=</span> <span class="nx">mock</span><span class="o">&lt;</span><span class="nx">Priced</span><span class="o">&gt;</span><span class="p">();</span>
+    <span class="nx">otherMenu</span><span class="p">.</span><span class="nx">price</span><span class="p">.</span><span class="nx">mockReturnValue</span><span class="p">(</span><span class="mi">99</span><span class="p">);</span>
+
+    <span class="nx">bill</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">otherMenu</span><span class="p">);</span>
+    <span class="nx">bill</span><span class="p">.</span><span class="nx">payWithMoney</span><span class="p">(</span><span class="mi">109</span><span class="p">);</span>
+    <span class="nx">expect</span><span class="p">(</span><span class="nx">bill</span><span class="p">.</span><span class="nx">points</span><span class="p">()).</span><span class="nx">toBe</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Estamos describiendo distintos casos:</p>
+<ul>
+<li>Cuando se paga exacto y no queda nada por pagar</li>
+<li>Cuando se pagan justo 10 euros</li>
+<li>Cuando se pagan menos de 1 euro</li>
+</ul>
+<p>Podríamos ser más exhaustivos, como determinar que no se den puntos hasta que no se pague, pero lo dejamos para los casos siguientes.</p>
+<p>Completamos el código en la clase <em>Bill</em>:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kr">import</span> <span class="nx">Priced</span> <span class="nx">from</span> <span class="s2">&quot;./priced&quot;</span><span class="p">;</span>
+
+<span class="kr">class</span> <span class="nx">Bill</span> <span class="p">{</span>
+  <span class="kr">private</span> <span class="nx">readonly</span> <span class="nx">VAT</span> <span class="o">=</span> <span class="mf">1.1</span><span class="p">;</span>
+  <span class="kr">private</span> <span class="nx">items</span>: <span class="kt">Priced</span><span class="p">[];</span>
+  <span class="kr">private</span> <span class="nx">committed</span>: <span class="kt">number</span><span class="p">;</span>
+
+  <span class="kr">constructor</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">items</span> <span class="o">=</span> <span class="p">[];</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">committed</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="nx">add</span><span class="p">(</span><span class="nx">item</span>: <span class="kt">Priced</span><span class="p">)</span><span class="o">:</span> <span class="k">void</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">item</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="nx">total</span><span class="p">()</span><span class="o">:</span> <span class="kt">number</span> <span class="p">{</span>
+<span class="hll">    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">VAT</span> <span class="o">*</span> <span class="k">this</span><span class="p">.</span><span class="nx">totalBeforeVAT</span><span class="p">();</span>
+</span>  <span class="p">}</span>
+
+<span class="hll">  <span class="nx">payWithMoney</span><span class="p">(</span><span class="nx">amount</span>: <span class="kt">number</span><span class="p">)</span><span class="o">:</span> <span class="k">void</span> <span class="p">{</span>
+</span><span class="hll">    <span class="k">this</span><span class="p">.</span><span class="nx">committed</span> <span class="o">=</span> <span class="nx">amount</span><span class="p">;</span>
+</span><span class="hll">  <span class="p">}</span>
+</span>
+<span class="hll">  <span class="nx">restToPay</span><span class="p">()</span><span class="o">:</span> <span class="kt">number</span> <span class="p">{</span>
+</span><span class="hll">    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">total</span><span class="p">()</span> <span class="o">-</span> <span class="k">this</span><span class="p">.</span><span class="nx">committed</span><span class="p">;</span>
+</span><span class="hll">  <span class="p">}</span>
+</span>
+<span class="hll">  <span class="nx">points</span><span class="p">()</span><span class="o">:</span> <span class="kt">number</span> <span class="p">{</span>
+</span><span class="hll">    <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">totalBeforeVAT</span><span class="p">()</span> <span class="o">/</span> <span class="mi">100</span><span class="p">);</span>
+</span><span class="hll">  <span class="p">}</span>
+</span>
+<span class="hll">  <span class="kr">private</span> <span class="nx">totalBeforeVAT</span><span class="p">()</span><span class="o">:</span> <span class="kt">number</span> <span class="p">{</span>
+</span><span class="hll">    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">reduce</span><span class="p">(</span>
+</span><span class="hll">      <span class="p">(</span><span class="nx">carry</span>: <span class="kt">number</span><span class="p">,</span> <span class="nx">item</span>: <span class="kt">Priced</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">carry</span> <span class="o">+</span> <span class="nx">item</span><span class="p">.</span><span class="nx">price</span><span class="p">(),</span>
+</span><span class="hll">      <span class="mi">0</span>
+</span><span class="hll">    <span class="p">);</span>
+</span><span class="hll">  <span class="p">}</span>
+</span><span class="p">}</span>
+
+<span class="kr">export</span> <span class="k">default</span> <span class="nx">Bill</span><span class="p">;</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Y comprobamos que pasamos las pruebas:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ yarn <span class="nb">test</span>
+
+yarn run v1.22.0
+$ jest
+ PASS  src/restaurant/menu.spec.ts
+ PASS  src/restaurant/bill.spec.ts
+
+Test Suites: <span class="m">2</span> passed, <span class="m">2</span> total
+Tests:       <span class="m">7</span> passed, <span class="m">7</span> total
+Snapshots:   <span class="m">0</span> total
+Time:        <span class="m">1</span>.01s
+Ran all <span class="nb">test</span> suites.
+Done in <span class="m">2</span>.36s.
+</code></pre></div>
+</td></tr></table>
+
+<p>Ya nos resta terminar de implementar la historia de usuario. Nuestra clase <code>step-definitions/menu.steps.ts</code> queda así:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="kr">import</span> <span class="p">{</span> <span class="nx">expect</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&quot;chai&quot;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="p">{</span> <span class="nx">Before</span><span class="p">,</span> <span class="nx">Given</span><span class="p">,</span> <span class="nx">TableDefinition</span><span class="p">,</span> <span class="nx">Then</span><span class="p">,</span> <span class="nx">When</span> <span class="p">}</span> <span class="nx">from</span> <span class="s2">&quot;cucumber&quot;</span><span class="p">;</span>
+
+<span class="kr">import</span> <span class="nx">Bill</span> <span class="nx">from</span> <span class="s2">&quot;../src/restaurant/bill&quot;</span><span class="p">;</span>
+<span class="kr">import</span> <span class="nx">Menu</span> <span class="nx">from</span> <span class="s2">&quot;../src/restaurant/menu&quot;</span><span class="p">;</span>
+
+<span class="kd">let</span> <span class="nx">menus</span>: <span class="kt">Menu</span><span class="p">[];</span>
+<span class="kd">let</span> <span class="nx">bill</span>: <span class="kt">Bill</span><span class="p">;</span>
+
+<span class="nx">Before</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+  <span class="nx">menus</span> <span class="o">=</span> <span class="p">[];</span>
+  <span class="nx">bill</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Bill</span><span class="p">();</span>
+<span class="p">});</span>
+
+<span class="nx">Given</span><span class="p">(</span><span class="s2">&quot;los siguientes menús:&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">dataTable</span>: <span class="kt">TableDefinition</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">dataTable</span>
+    <span class="p">.</span><span class="nx">rows</span><span class="p">()</span>
+    <span class="p">.</span><span class="nx">forEach</span><span class="p">(</span>
+      <span class="nx">values</span> <span class="o">=&gt;</span>
+        <span class="p">(</span><span class="nx">menus</span><span class="p">[</span><span class="nx">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Menu</span><span class="p">(</span>
+          <span class="nb">Number</span><span class="p">(</span><span class="nx">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+          <span class="mi">100</span> <span class="o">*</span> <span class="nb">Number</span><span class="p">(</span><span class="nx">values</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="p">))</span>
+    <span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nx">Given</span><span class="p">(</span><span class="s2">&quot;que he comprado {int} menús del número {int}&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span>
+  <span class="nx">units</span>: <span class="kt">number</span><span class="p">,</span>
+  <span class="nx">option</span>: <span class="kt">number</span>
+<span class="p">)</span> <span class="p">{</span>
+  <span class="kr">const</span> <span class="nx">menu</span> <span class="o">=</span> <span class="nx">menus</span><span class="p">[</span><span class="nx">option</span><span class="p">];</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">units</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">bill</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="nx">menu</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="nx">When</span><span class="p">(</span><span class="s2">&quot;pido la cuenta recibo una factura de {int} euros&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span>
+  <span class="nx">total</span>: <span class="kt">number</span>
+<span class="p">)</span> <span class="p">{</span>
+  <span class="nx">expect</span><span class="p">(</span><span class="nx">bill</span><span class="p">.</span><span class="nx">total</span><span class="p">()).</span><span class="nx">to</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">total</span> <span class="o">*</span> <span class="mi">100</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="nx">When</span><span class="p">(</span><span class="s2">&quot;pago en efectivo con {int} euros&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">ammount</span>: <span class="kt">number</span><span class="p">)</span> <span class="p">{</span>
+<span class="hll">  <span class="nx">bill</span><span class="p">.</span><span class="nx">payWithMoney</span><span class="p">(</span><span class="nx">ammount</span> <span class="o">*</span> <span class="mi">100</span><span class="p">);</span>
+</span><span class="p">});</span>
+
+<span class="nx">Then</span><span class="p">(</span><span class="s2">&quot;la factura está pagada&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<span class="hll">  <span class="nx">expect</span><span class="p">(</span><span class="nx">bill</span><span class="p">.</span><span class="nx">restToPay</span><span class="p">()).</span><span class="nx">to</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span><span class="p">});</span>
+
+<span class="nx">Then</span><span class="p">(</span><span class="s2">&quot;he obtenido {int} puntos&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">points</span>: <span class="kt">number</span><span class="p">)</span> <span class="p">{</span>
+<span class="hll">  <span class="nx">expect</span><span class="p">(</span><span class="nx">bill</span><span class="p">.</span><span class="nx">points</span><span class="p">()).</span><span class="nx">to</span><span class="p">.</span><span class="nx">equal</span><span class="p">(</span><span class="nx">points</span><span class="p">);</span>
+</span><span class="p">});</span>
+
+<span class="nx">When</span><span class="p">(</span><span class="s2">&quot;pago con {int} puntos y {int} euros&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="kr">int</span><span class="p">,</span> <span class="nx">int2</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// When(&#39;pago con {int} puntos y {float} euros&#39;, function (int, float) {</span>
+  <span class="c1">// When(&#39;pago con {float} puntos y {int} euros&#39;, function (float, int) {</span>
+  <span class="c1">// When(&#39;pago con {float} puntos y {float} euros&#39;, function (float, float2) {</span>
+  <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
+  <span class="k">return</span> <span class="s2">&quot;pending&quot;</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="nx">Then</span><span class="p">(</span><span class="s2">&quot;quedan {int} euros por pagar&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="kr">int</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Then(&#39;quedan {float} euros por pagar&#39;, function (float) {</span>
+  <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
+  <span class="k">return</span> <span class="s2">&quot;pending&quot;</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="nx">Given</span><span class="p">(</span><span class="s2">&quot;que he comprado {int} menú del número {int}&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="kr">int</span><span class="p">,</span> <span class="nx">int2</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Given(&#39;que he comprado {int} menú del número {float}&#39;, function (int, float) {</span>
+  <span class="c1">// Given(&#39;que he comprado {float} menú del número {int}&#39;, function (float, int) {</span>
+  <span class="c1">// Given(&#39;que he comprado {float} menú del número {float}&#39;, function (float, float2) {</span>
+  <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
+  <span class="k">return</span> <span class="s2">&quot;pending&quot;</span><span class="p">;</span>
+<span class="p">});</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>Si ejecutamos este primer escenario debemos comprobar que se ha completado con éxito:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code>$ yarn cucumber features/menu.feature:16
+..............
+
+<span class="m">1</span> scenario <span class="o">(</span><span class="m">1</span> passed<span class="o">)</span>
+<span class="m">6</span> steps <span class="o">(</span><span class="m">6</span> passed<span class="o">)</span>
+0m00.003s
+Done in <span class="m">1</span>.85s.
+</code></pre></div>
+</td></tr></table>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../start-project/" title="Crear el proyecto" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Anterior
+                </span>
+                Crear el proyecto
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../second-scenario/" title="Segundo escenario" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Siguiente
+                </span>
+                Segundo escenario
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/aulasoftwarelibre" target="_blank" rel="noopener" title="github" class="md-footer-social__link fa fa-github"></a>
+    
+      <a href="https://twitter.com/aulasl" target="_blank" rel="noopener" title="twitter" class="md-footer-social__link fa fa-twitter"></a>
+    
+      <a href="https://www.facebook.com/AulaSoftwareLibre" target="_blank" rel="noopener" title="facebook" class="md-footer-social__link fa fa-facebook"></a>
+    
+      <a href="https://instagram.com/aulasoftwarelibre" target="_blank" rel="noopener" title="instagram" class="md-footer-social__link fa fa-instagram"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.c33a9706.js"></script>
+      
+        
+        
+          
+          <script src="../assets/javascripts/lunr/lunr.stemmer.support.js"></script>
+          
+            
+              
+              
+                <script src="../assets/javascripts/lunr/lunr.es.js"></script>
+              
+            
+          
+          
+        
+      
+      <script>app.initialize({version:"1.1",url:{base:".."}})</script>
+      
+    
+  </body>
+</html>
