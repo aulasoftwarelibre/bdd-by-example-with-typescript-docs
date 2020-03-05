@@ -1,0 +1,53 @@
+site_name: "BDD by example with TypeScript"
+site_author: "Sergio Gómez <sergio@uco.es>"
+site_description: "Curso básico de BDD con TypeScript"
+repo_name: "aulasoftwarelibre/bdd-by-example-with-typescript-docs"
+repo_url: "https://github.com/aulasoftwarelibre/bdd-by-example-with-typescript-docs.git"
+
+theme:
+  name: "material"
+  language: "es"
+  favicon: "images/logoasl.png"
+
+extra_css: [extra.css]
+extra:
+  palette:
+    primary: "green"
+    accent: "light green"
+  social:
+    - type: "github"
+      link: "https://github.com/aulasoftwarelibre"
+    - type: "twitter"
+      link: "https://twitter.com/aulasl"
+    - type: "facebook"
+      link: "https://www.facebook.com/AulaSoftwareLibre"
+    - type: "instagram"
+      link: "https://instagram.com/aulasoftwarelibre"
+  feature:
+    tabs: true
+
+markdown_extensions:
+  - admonition: ~
+  - attr_list: ~
+  - codehilite:
+      guess_lang: false
+      linenums: true
+  - def_list: ~
+  - footnotes: ~
+  - toc:
+      permalink: true
+
+nav:
+  - Inicio: index.md
+  - Introducción: introduction.md
+  - Modelando con ejemplos: modelling.md
+  - Crear el proyecto: start-project.md
+  - Implementando el primer escenario: first-scenario.md
+  # - Segundo escenario: second-scenario.md
+  # - Tercer escenario: third-scenario.md
+  # - Cuarto escenario: fourth-scenario.md
+  # - Quinto escenario: fifth-scenario.md
+
+google_analytics:
+  - "UA-51754922-2"
+  - "auto"
