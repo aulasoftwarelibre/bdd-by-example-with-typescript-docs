@@ -46,7 +46,7 @@ nav:
   - Segundo escenario: second-scenario.md
   - Tercer escenario: third-scenario.md
   - Cuarto escenario: fourth-scenario.md
-  # - Quinto escenario: fifth-scenario.md
+  - Quinto escenario: fifth-scenario.md
 
 google_analytics:
   - "UA-51754922-2"
