@@ -2,7 +2,7 @@ site_name: "BDD by example with TypeScript"
 site_author: "Sergio Gómez <sergio@uco.es>"
 site_description: "Curso básico de BDD con TypeScript"
 repo_name: "aulasoftwarelibre/bdd-by-example-with-typescript-docs"
-repo_url: "https://github.com/aulasoftwarelibre/bdd-by-example-with-typescript-docs.git"
+repo_url: "https://github.com/aulasoftwarelibre/bdd-by-example-with-typescript-docs"
 
 theme:
   name: "material"
