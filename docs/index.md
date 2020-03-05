@@ -16,4 +16,5 @@ Versión en PHP: [https://github.com/aulasoftwarelibre/bdd-by-example-docs/](htt
 
 Este taller ha sido impartido por las siguientes personas:
 
-- [Sergio Gómez](https://github.com/sgomez)
+- [Javier Cañete](https://github.com/Javibu5) (Versión PHP)
+- [Sergio Gómez](https://github.com/sgomez) (Versión PHP y TypeScript)
